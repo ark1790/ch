@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package proto;
+
+import "google/protobuf/Struct.proto";
+
+
+option go_package = "github.com/ark1790/ch/eventstore/proto";
+
+
+
+service EventStore {
+    rpc CreateEvent(ReqCreateEvent) returns (RespCreateEvent) {};
+    rpc FetchEvents(ReqFetchEvents) returns (RespFetchEvents) {};
+}
+
+message Event {
+    string id = 1;
+    string email = 2;
+    string environment = 3;
+    string component = 4;
+    string message = 5;
+    google.protobuf.Struct data = 6;
+    int64 created_at = 7;
+}
+
+
+message ReqCreateEvent{
+    string email = 1;
+    string environment = 2;
+    string component = 3;
+    string message = 4;
+    google.protobuf.Struct data = 5;
+    int64 created_at = 6;
+}
+
+
+message RespCreateEvent {
+    Event event = 1;
+}
+
+message ReqFetchEvents{
+    string id = 1;
+    string email = 2;
+    string environment = 3;
+    string component = 4;
+    string message = 5;
+    int64 created_at = 6;
+    int64 from = 7;
+    int64 to = 8;
+    string from_date = 9;
+
+    int32 page = 10;
+    int32 per_page=11;
+}
+
+
+message RespFetchEvents{
+    repeated Event events = 1;
+    int32 page = 2;
+    int32 per_page = 3;
+}
