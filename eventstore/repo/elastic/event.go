@@ -41,10 +41,8 @@ func (e EventRepo) FetchEvents(ctx context.Context, qry map[string]string, offse
 			rQry.Gte(v)
 		} else if k == "to" {
 			rQry.Lte(v)
-		} else if k == "message" {
-			eQry = eQry.Must(elastic.NewMatchPhraseQuery(k, v))
 		} else {
-			eQry = eQry.Must(elastic.NewMatchQuery(k, v))
+			eQry = eQry.Must(elastic.NewMatchPhraseQuery(k, v))
 		}
 	}
 

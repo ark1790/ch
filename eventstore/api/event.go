@@ -34,6 +34,9 @@ func validateCreateEvent(pld *proto.ReqCreateEvent) error {
 	if pld.Component == "" {
 		errV.add("component", "is required")
 	}
+	if pld.CreatedAt <= 0 {
+		errV.add("created_at", "is required")
+	}
 
 	if len(errV) > 0 {
 		st := status.New(codes.InvalidArgument, "Validation Error")
